@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Header from '../header/Header';
 import MainPage from '../mainPage/MainPage';
-import AboutPage from '../aboutPage/aboutPage';
+import AboutPage from '../aboutPage/AboutPage';
 import ErrorPage from '../errorPage/ErrorPage';
 
 import './app.scss';
