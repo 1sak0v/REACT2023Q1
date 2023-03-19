@@ -5,3 +5,10 @@ export interface ISearchState {
 export interface ISearchProps {
   test?: string;
 }
+
+export type TData = {
+  description: string;
+  id: number;
+  name: string;
+  thumbnail: string;
+};
