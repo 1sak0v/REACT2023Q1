@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import { ISearchProps, ISearchState } from '../../types/types';
+import { ISearchState } from '../../types/types';
 
 import './searchPanel.scss';
 
@@ -24,13 +24,6 @@ class SearchPanel extends Component {
       });
     }
   }
-
-  // componentDidUpdate(prevProps: Readonly<ISearchProps>, prevState: Readonly<ISearchState>): void {
-  //   if (prevState.search !== this.state.search) {
-  //     const { search } = this.state;
-  //     localStorage.setItem('search', search);
-  //   }
-  // }
 
   componentWillUnmount(): void {
     const { search } = this.state;

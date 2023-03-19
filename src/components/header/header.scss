@@ -1,11 +1,12 @@
 .header {
   height: 60px;
-  background: #000000;
-  padding: 19px 0;
+  background: #232222;
+  padding: 19px;
 
   &__wrapper {
     display: flex;
     align-items: center;
+    margin-left: 60px;
   }
 
   h1 {
