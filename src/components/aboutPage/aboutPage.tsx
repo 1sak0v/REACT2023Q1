@@ -1,4 +1,4 @@
-function AboutPage() {
+const AboutPage = () => {
   return (
     <main className="main">
       <div className="container">
@@ -8,6 +8,6 @@ function AboutPage() {
       </div>
     </main>
   );
-}
+};
 
 export default AboutPage;
