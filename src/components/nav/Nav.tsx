@@ -19,6 +19,11 @@ const Nav = () => {
             About
           </NavLink>
         </li>
+        <li className="nav__list-item">
+          <NavLink to="/form" className={({ isActive }) => activeClass(isActive)}>
+            Form
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
