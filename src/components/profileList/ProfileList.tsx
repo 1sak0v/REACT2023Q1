@@ -1,5 +1,5 @@
-import Profile from '../components/profile/Profile';
-import { TProfiles } from '../types/types';
+import Profile from '../profile/Profile';
+import { TProfiles } from '../../types/types';
 
 import './profileList.scss';
 

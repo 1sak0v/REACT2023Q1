@@ -1,11 +1,11 @@
 import { Component } from 'react';
-import ProfileList from '../../profileList/ProfileList';
+import ProfileList from '../profileList/ProfileList';
 import { TProfiles } from '../../types/types';
 
 import Form from '../form/Form';
 
-class FormPage extends Component<never, TProfiles> {
-  id = 1;
+class FormPage extends Component<Record<string, void>, TProfiles> {
+  _id = 1;
   state = {
     profiles: [],
   };
@@ -19,7 +19,7 @@ class FormPage extends Component<never, TProfiles> {
     image: string
   ): void => {
     const newProfile = {
-      id: this.id++,
+      id: this._id++,
       name,
       birthday,
       continent,
