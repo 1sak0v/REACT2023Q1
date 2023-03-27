@@ -1,0 +1,50 @@
+.profile {
+  margin-top: 20px;
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(4, 250px);
+    column-gap: 25px;
+    row-gap: 30px;
+  }
+}
+
+.profile-item {
+  height: 390px;
+  filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+  background: #232222;
+  border-radius: 4px;
+
+  &__img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-top: 10px;
+    margin-left: 15px;
+  }
+
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #fff;
+    text-align: left;
+    margin-left: 15px;
+    margin-top: 5px;
+  }
+
+  &__skills {
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+  }
+}
