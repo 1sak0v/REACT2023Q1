@@ -1,4 +1,4 @@
-const AboutPage = () => {
+const AboutPages = () => {
   return (
     <main className="main">
       <div className="container">
@@ -10,4 +10,4 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default AboutPages;
