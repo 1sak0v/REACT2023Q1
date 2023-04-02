@@ -20,7 +20,7 @@ export type TProfile = {
   continent: string;
   skills: string[];
   gender: string;
-  image: string;
+  picture: string;
 };
 
 export type TProfiles = {
@@ -34,7 +34,7 @@ export interface IFormProps {
     continent: string,
     skills: string[],
     gender: string,
-    image: string
+    picture: string
   ): void;
 }
 
@@ -48,3 +48,23 @@ export interface IFormState {
   success: boolean;
   disabledSubmit: boolean;
 }
+
+export interface IFrom {
+  name: string;
+  birthday: string;
+  continent: string;
+  skills: string[];
+  gender: string;
+  picture: FileList;
+}
+
+export type TFormProps = {
+  addProfile: (
+    name: string,
+    birthday: string,
+    continent: string,
+    skills: string[],
+    gender: string,
+    picture: string
+  ) => void;
+};
