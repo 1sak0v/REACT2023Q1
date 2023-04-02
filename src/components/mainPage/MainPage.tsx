@@ -3,7 +3,7 @@ import SearchPanel from '../searchPanel/SearchPanel';
 
 import './mainPage.scss';
 
-function MainPage() {
+const MainPage = () => {
   return (
     <main className="main">
       <div className="container">
@@ -15,6 +15,6 @@ function MainPage() {
       </div>
     </main>
   );
-}
+};
 
 export default MainPage;

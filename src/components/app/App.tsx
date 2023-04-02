@@ -8,7 +8,7 @@ import ErrorPage from '../errorPage/ErrorPage';
 
 import './app.scss';
 
-function App() {
+const App = () => {
   return (
     <div className="app">
       <Routes>
@@ -22,6 +22,6 @@ function App() {
       </Routes>
     </div>
   );
-}
+};
 
 export default App;
