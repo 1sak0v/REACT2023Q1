@@ -10,7 +10,7 @@ describe('ProfileList component', () => {
       continent: 'North America',
       skills: ['JavaScript', 'React', 'HTML', 'CSS'],
       gender: 'Male',
-      image: 'https://example.com/profile1.jpg',
+      picture: 'https://example.com/profile1.jpg',
     },
   ];
 

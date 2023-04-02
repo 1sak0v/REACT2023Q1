@@ -7,9 +7,9 @@ describe('Profile component', () => {
     name: 'John Doe',
     birthday: '01/01/1990',
     continent: 'North America',
-    skills: ['JavaScript', 'React', 'HTML', 'CSS'],
+    skills: ['HTML', 'CSS'],
     gender: 'Male',
-    image: 'https://example.com/profile.jpg',
+    picture: 'https://example.com/profile.jpg',
   };
 
   it('renders profile information correctly', () => {
@@ -31,6 +31,6 @@ describe('Profile component', () => {
     expect(genderElement).toBeInTheDocument();
 
     const imageElement = getByAltText(profile.name);
-    expect(imageElement).toHaveAttribute('src', profile.image);
+    expect(imageElement).toHaveAttribute('src', profile.picture);
   });
 });
