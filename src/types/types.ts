@@ -14,7 +14,7 @@ export type TData = {
 };
 
 export type TProfile = {
-  id: number;
+  id: string;
   name: string;
   birthday: string;
   continent: string;

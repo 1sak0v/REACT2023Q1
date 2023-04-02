@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import { TProfile } from '../../types/types';
 import Form from '../form/Form';
@@ -16,7 +17,7 @@ const FormPage = () => {
     picture: string
   ): void => {
     const newProfile: TProfile = {
-      id: 1,
+      id: uuidv4(),
       name,
       birthday,
       continent,
