@@ -4,7 +4,7 @@ import ProfileList from '../components/profileList/ProfileList';
 describe('ProfileList component', () => {
   const profiles = [
     {
-      id: 1,
+      id: '1',
       name: 'John Doe',
       birthday: '01/01/1990',
       continent: 'North America',

@@ -3,7 +3,7 @@ import Profile from '../components/profile/Profile';
 
 describe('Profile component', () => {
   const profile = {
-    id: 1,
+    id: '1',
     name: 'John Doe',
     birthday: '01/01/1990',
     continent: 'North America',
