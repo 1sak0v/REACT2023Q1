@@ -1,48 +1,35 @@
-import { Component } from 'react';
-
-import { ISearchState } from '../../types/types';
+import { useEffect, useState } from 'react';
 
 import './searchPanel.scss';
 
-class SearchPanel extends Component {
-  state: ISearchState = {
-    search: '',
-  };
+const SearchPanel = () => {
+  const [search, setSearch] = useState('');
 
-  setSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const search = e.currentTarget.value;
-    this.setState({
-      search,
-    });
-  };
+  useEffect(() => {
+    const search = localStorage.getItem('search') || '';
+    setSearch(search);
+  }, []);
 
-  componentDidMount(): void {
-    if (localStorage.getItem('search')) {
-      const search = localStorage.getItem('search');
-      this.setState({
-        search,
-      });
-    }
-  }
-
-  componentWillUnmount(): void {
-    const { search } = this.state;
+  useEffect(() => {
     localStorage.setItem('search', search);
-  }
+  }, [search]);
 
-  render(): JSX.Element {
-    return (
-      <div className="search">
-        <input
-          type="text"
-          className="search__input"
-          placeholder="Search..."
-          value={this.state.search}
-          onChange={this.setSearch}
-        />
-      </div>
-    );
-  }
-}
+  const onUpdateSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const search = e.currentTarget.value;
+    setSearch(search);
+  };
+
+  return (
+    <div className="search">
+      <input
+        type="text"
+        className="search__input"
+        placeholder="Search..."
+        value={search}
+        onChange={onUpdateSearch}
+      />
+    </div>
+  );
+};
 
 export default SearchPanel;
