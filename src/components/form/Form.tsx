@@ -1,173 +1,159 @@
-import { Component, createRef } from 'react';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import validateFirstName from './validation/validateFirstName';
-import validateBirthday from './validation/validateBirthday';
-import validateContinent from './validation/validateContinent';
-import validateSkills from './validation/validateSkills';
-import validateGender from './validation/validateGender';
-import validateFile from './validation/validateFile';
-import { IFormProps, IFormState } from '../../types/types';
+import { IFrom, TFormProps } from '../../types/types';
 
 import './form.scss';
 
-class Form extends Component<IFormProps, IFormState> {
-  state = {
-    firstNameError: false,
-    birthdayError: false,
-    continentError: false,
-    skillsError: false,
-    genderError: false,
-    fileError: false,
-    success: false,
-    disabledSubmit: false,
-  };
+const Form = (props: TFormProps) => {
+  const [success, setSuccess] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IFrom>();
 
-  firstNameRef: React.RefObject<HTMLInputElement> = createRef();
-  birthdayRef: React.RefObject<HTMLInputElement> = createRef();
-  continentRef: React.RefObject<HTMLSelectElement> = createRef();
-  skillsHTMLRef: React.RefObject<HTMLInputElement> = createRef();
-  skillsCSSRef: React.RefObject<HTMLInputElement> = createRef();
-  skillsJSRef: React.RefObject<HTMLInputElement> = createRef();
-  genderMaleRef: React.RefObject<HTMLInputElement> = createRef();
-  genderFemaleRef: React.RefObject<HTMLInputElement> = createRef();
-  fileRef: React.RefObject<HTMLInputElement> = createRef();
-
-  resetError = () => {
-    this.setState({
-      firstNameError: false,
-      birthdayError: false,
-      continentError: false,
-      skillsError: false,
-      genderError: false,
-      fileError: false,
-      success: false,
-    });
-  };
-
-  handleSubmit = (e: React.FormEvent): void => {
-    e.preventDefault();
-    this.resetError();
-    const firstNameError = validateFirstName(this.firstNameRef);
-    const birthdayError = validateBirthday(this.birthdayRef);
-    const continentError = validateContinent(this.continentRef);
-    const skillsError = validateSkills(this.skillsHTMLRef, this.skillsCSSRef, this.skillsJSRef);
-    const genderError = validateGender(this.genderMaleRef, this.genderFemaleRef);
-    const fileError = validateFile(this.fileRef);
-    this.setState({
-      firstNameError,
-      birthdayError,
-      continentError,
-      skillsError,
-      genderError,
-      fileError,
-    });
-
-    if (
-      firstNameError ||
-      birthdayError ||
-      continentError ||
-      skillsError ||
-      genderError ||
-      fileError
-    ) {
-      return;
-    }
-    this.setState({ success: true, disabledSubmit: true });
-    const firstName = this.firstNameRef.current?.value as string;
-    const birthday = this.birthdayRef.current?.value as string;
-    const continent = this.continentRef.current?.value as string;
-    const skills = [
-      this.skillsHTMLRef.current?.checked ? 'HTML' : '',
-      this.skillsCSSRef.current?.checked ? 'CSS' : '',
-      this.skillsJSRef.current?.checked ? 'JS' : '',
-    ].filter((el) => el !== '');
-    const gender = (this.genderFemaleRef.current?.checked as boolean) ? 'female' : 'male';
-    const files = this.fileRef.current?.files as FileList;
-    const image = URL.createObjectURL(files[0]);
-
-    this.props.addProfile(firstName, birthday, continent, skills, gender, image);
-
+  const onSubmit: SubmitHandler<IFrom> = ({
+    name,
+    birthday,
+    continent,
+    skills,
+    gender,
+    picture,
+  }) => {
+    setSuccess(true);
+    props.addProfile(name, birthday, continent, skills, gender, URL.createObjectURL(picture[0]));
     setTimeout(() => {
-      const target = e.target as HTMLFormElement;
-      target.reset();
-      this.setState({ success: false, disabledSubmit: false });
+      setSuccess(false);
+      reset();
     }, 1000);
   };
 
-  render(): JSX.Element {
-    const {
-      firstNameError,
-      birthdayError,
-      continentError,
-      skillsError,
-      genderError,
-      fileError,
-      success,
-      disabledSubmit,
-    } = this.state;
-    return (
-      <form className="form" onSubmit={this.handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input id="name" type="text" placeholder="Name" name="first" ref={this.firstNameRef} />
-        {firstNameError ? <span className="form__error">Invalid input</span> : null}
+  return (
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="name">Name</label>
+      <input
+        id="name"
+        type="text"
+        placeholder="Name"
+        {...register('name', {
+          required: 'This field is required',
+          pattern: {
+            value: /^[A-ZА-ЯЁ][a-zа-яё]+$/,
+            message: 'The name must start with a capital letter',
+          },
+          minLength: {
+            value: 2,
+            message: 'Name must contain at least 2 characters',
+          },
+        })}
+      />
+      {errors.name?.message && <span className="form__error">{errors.name?.message}</span>}
 
-        <label htmlFor="birthday">Birthday</label>
-        <input id="birthday" type="date" name="date" ref={this.birthdayRef} />
-        {birthdayError ? <span className="form__error">Invalid input</span> : null}
+      <label htmlFor="birthday">Birthday</label>
+      <input
+        id="birthday"
+        type="date"
+        {...register('birthday', {
+          required: 'This field is required',
+          validate: (value) => Date.parse(value) < Date.now(),
+        })}
+      />
+      {errors.birthday && (
+        <span className="form__error">
+          {errors.birthday?.message || 'Date of birth no later than today'}
+        </span>
+      )}
 
-        <label htmlFor="continent">Continent</label>
-        <select name="continent" id="continent" ref={this.continentRef}>
-          <option></option>
-          <option value="Africa">Africa</option>
-          <option value="Antarctica">Antarctica</option>
-          <option value="Asia">Asia</option>
-          <option value="Europe">Europe</option>
-          <option value="North America">North America</option>
-          <option value="Oceania">Oceania</option>
-          <option value="South America">South America</option>
-        </select>
-        {continentError ? <span className="form__error">Invalid input</span> : null}
+      <label htmlFor="continent">Continent</label>
+      <select
+        id="continent"
+        {...register('continent', {
+          required: 'This field is required',
+          validate: (value) => value !== '',
+        })}
+      >
+        <option></option>
+        <option value="Africa">Africa</option>
+        <option value="Antarctica">Antarctica</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="North America">North America</option>
+        <option value="Oceania">Oceania</option>
+        <option value="South America">South America</option>
+      </select>
+      {errors.continent && <span className="form__error">This field is required</span>}
 
-        <legend>Skills</legend>
-        <label htmlFor="html">
-          <input id="html" type="checkbox" value="html" name="skills" ref={this.skillsHTMLRef} />
-          HTML
-        </label>
+      <legend>Skills</legend>
+      <label htmlFor="html">
+        <input
+          id="html"
+          type="checkbox"
+          value="html"
+          {...register('skills', { required: 'This field is required' })}
+        />
+        HTML
+      </label>
 
-        <label htmlFor="css">
-          <input id="css" type="checkbox" value="css" name="skills" ref={this.skillsCSSRef} />
-          CSS
-        </label>
+      <label htmlFor="css">
+        <input
+          id="css"
+          type="checkbox"
+          value="css"
+          {...register('skills', { required: 'This field is required' })}
+        />
+        CSS
+      </label>
 
-        <label htmlFor="js">
-          <input id="js" type="checkbox" value="js" name="skills" ref={this.skillsJSRef} />
-          JavaScript
-        </label>
-        {skillsError ? <span className="form__error">Invalid input</span> : null}
+      <label htmlFor="js">
+        <input
+          id="js"
+          type="checkbox"
+          value="js"
+          {...register('skills', { required: 'This field is required' })}
+        />
+        JavaScript
+      </label>
+      {errors.skills?.message && <span className="form__error">{errors.skills?.message}</span>}
 
-        <legend>Gender</legend>
-        <label htmlFor="male">
-          <input id="male" type="radio" name="gender" ref={this.genderMaleRef} />
-          Male
-        </label>
+      <legend>Gender</legend>
+      <label htmlFor="male">
+        <input
+          id="male"
+          type="radio"
+          value="male"
+          {...register('gender', { required: 'This field is required' })}
+        />
+        Male
+      </label>
 
-        <label htmlFor="female">
-          <input id="female" type="radio" name="gender" ref={this.genderFemaleRef} />
-          Female
-        </label>
-        {genderError ? <span className="form__error">Invalid input</span> : null}
+      <label htmlFor="female">
+        <input
+          id="female"
+          type="radio"
+          value="female"
+          {...register('gender', { required: 'This field is required' })}
+        />
+        Female
+      </label>
+      {errors.gender?.message && <span className="form__error">{errors.gender?.message}</span>}
 
-        <label htmlFor="picture">Picture</label>
-        <input id="picture" type="file" accept="image/*" ref={this.fileRef} />
-        {fileError ? <span className="form__error">Invalid input</span> : null}
+      <label htmlFor="picture">Picture</label>
+      <input
+        id="picture"
+        type="file"
+        accept="image/*"
+        {...register('picture', { required: 'This field is required' })}
+      />
+      {errors.picture?.message && <span className="form__error">{errors.picture?.message}</span>}
 
-        <button className="form__submit" disabled={disabledSubmit}>
-          Submit
-        </button>
-        {success ? <span className="form__success">Successfuly</span> : null}
-      </form>
-    );
-  }
-}
+      <button className="form__submit" disabled={success}>
+        Submit
+      </button>
+      {success && <span className="form__success">Successfuly</span>}
+    </form>
+  );
+};
 
 export default Form;

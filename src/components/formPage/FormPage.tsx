@@ -1,51 +1,43 @@
-import { Component } from 'react';
-import ProfileList from '../profileList/ProfileList';
-import { TProfiles } from '../../types/types';
+import { useState } from 'react';
 
+import { TProfile } from '../../types/types';
 import Form from '../form/Form';
+import ProfileList from '../profileList/ProfileList';
 
-class FormPage extends Component<Record<string, void>, TProfiles> {
-  _id = 1;
-  state = {
-    profiles: [],
-  };
+const FormPage = () => {
+  const [profiles, setProfiles] = useState<Array<TProfile>>([]);
 
-  addProfile = (
+  const addProfile = (
     name: string,
     birthday: string,
     continent: string,
     skills: string[],
     gender: string,
-    image: string
+    picture: string
   ): void => {
-    const newProfile = {
-      id: this._id++,
+    const newProfile: TProfile = {
+      id: 1,
       name,
       birthday,
       continent,
       skills,
       gender,
-      image,
+      picture,
     };
-    this.setState(({ profiles }) => ({
-      profiles: [...profiles, newProfile],
-    }));
+    setProfiles((profiles) => [...profiles, newProfile]);
   };
 
-  render() {
-    const { profiles } = this.state;
-    return (
-      <main className="main">
-        <div className="container">
-          <div className="main__wrapper">
-            <h2 className="main__title">Form</h2>
-            <Form addProfile={this.addProfile} />
-            <ProfileList profiles={profiles} />
-          </div>
+  return (
+    <main className="main">
+      <div className="container">
+        <div className="main__wrapper">
+          <h2 className="main__title">Form</h2>
+          <Form addProfile={addProfile} />
+          <ProfileList profiles={profiles} />
         </div>
-      </main>
-    );
-  }
-}
+      </div>
+    </main>
+  );
+};
 
 export default FormPage;
