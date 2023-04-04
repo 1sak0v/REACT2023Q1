@@ -12,7 +12,7 @@ const Form = (props: TFormProps) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IFrom>();
+  } = useForm<IFrom>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
   const onSubmit: SubmitHandler<IFrom> = ({
     name,
