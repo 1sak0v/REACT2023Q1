@@ -1,17 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import './searchPanel.scss';
 
 const SearchPanel = () => {
   const [search, setSearch] = useState('');
+  const searchRef = useRef(search);
 
   useEffect(() => {
     const search = localStorage.getItem('search') || '';
     setSearch(search);
+    return () => {
+      localStorage.setItem('search', searchRef.current);
+    };
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('search', search);
+    searchRef.current = search;
   }, [search]);
 
   const onUpdateSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -22,7 +26,8 @@ const SearchPanel = () => {
   return (
     <div className="search">
       <input
-        type="text"
+        type="search"
+        name="search"
         className="search__input"
         placeholder="Search..."
         value={search}
