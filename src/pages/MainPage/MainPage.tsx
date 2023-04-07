@@ -1,5 +1,5 @@
-import CardList from '../cardList/CardList';
-import SearchPanel from '../searchPanel/SearchPanel';
+import SearchPanel from '../../components/searchPanel/SearchPanel';
+import CardList from '../../components/cardList/CardList';
 
 import './mainPage.scss';
 

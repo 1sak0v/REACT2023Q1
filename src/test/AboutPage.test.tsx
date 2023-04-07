@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import AboutPage from '../components/aboutPages/AboutPages';
+import AboutPage from '../pages/AboutPage/AboutPage';
 
 describe('AboutPage', () => {
   it('renders the title', () => {

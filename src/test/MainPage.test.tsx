@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-
-import MainPage from '../components/mainPage/MainPage';
+import MainPage from '../pages/MainPage/MainPage';
 
 describe('MainPage', () => {
   test('renders main page with title and card list', () => {

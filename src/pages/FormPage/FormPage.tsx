@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import ProfileList from '../../components/profileList/ProfileList';
+import Form from '../../components/form/Form';
 import { TProfile } from '../../types/types';
-import Form from '../form/Form';
-import ProfileList from '../profileList/ProfileList';
 
 const FormPage = () => {
   const [profiles, setProfiles] = useState<Array<TProfile>>([]);

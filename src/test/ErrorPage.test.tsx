@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import ErrorPage from '../components/errorPage/ErrorPage';
+import ErrorPage from '../pages/NotFoundPage/ErrorPage';
 
 describe('ErrorPage', () => {
   it('displays the error image and a link to go back home', () => {
