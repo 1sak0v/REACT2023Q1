@@ -68,3 +68,56 @@ export type TFormProps = {
     picture: string
   ) => void;
 };
+
+export type TComiscItems = {
+  name: string;
+};
+
+export type TResultsCharacter = {
+  id: number;
+  name: string;
+  description: string;
+  thumbnail: {
+    path: string;
+    extension: string;
+  };
+  comics: {
+    available: number;
+    items: TComiscItems[];
+  };
+  series: {
+    available: number;
+    items: TComiscItems[];
+  };
+};
+
+export type TCharactersData = {
+  data: {
+    offset: number;
+    limit: number;
+    total: number;
+    conut: number;
+    results: TResultsCharacter[];
+  };
+};
+
+export type TCharacter = {
+  id: number;
+  name: string;
+  description: string;
+  thumbnail: string;
+  comics: TComiscItems[];
+  series: TComiscItems[];
+};
+
+export type TSearchForm = {
+  search: string;
+};
+
+export type TSearchPanelProps = {
+  onUpdateSearch: (search: string) => void;
+};
+
+export type TCardListProps = {
+  search: string;
+};
