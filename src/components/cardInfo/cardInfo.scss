@@ -1,0 +1,69 @@
+.modal-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 420px;
+  min-height: 500px;
+  filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+  background: #232222;
+  border-radius: 4px;
+  color: #fff;
+  padding: 0 0 20px 0;
+
+  &__close {
+    position: absolute;
+    top: -10px;
+    right: -30px;
+    font-size: 44px;
+    cursor: pointer;
+  }
+
+  &__img {
+    width: 100%;
+    height: 360px;
+    border-radius: 4px;
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+    text-transform: uppercase;
+    margin-top: 15px;
+    text-align: center;
+    color: #FE9013;
+  }
+
+  &__descr {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 0 10px;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  &__subheader {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 16px;
+    text-align: center;
+    margin-top: 15px;
+    color: #FE9013;
+  }
+
+  &__comics,
+  &__series {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  &__comic,
+  &__serie {
+    margin-top: 5px;
+  }
+}
