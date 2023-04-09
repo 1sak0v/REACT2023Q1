@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface ISearchState {
   search: string;
 }
@@ -6,11 +8,12 @@ export interface ISearchProps {
   test?: string;
 }
 
-export type TData = {
+export type TCardProps = {
   description: string;
   id: number;
   name: string;
   thumbnail: string;
+  onOpen: (id: number) => void;
 };
 
 export type TProfile = {
@@ -120,4 +123,14 @@ export type TSearchPanelProps = {
 
 export type TCardListProps = {
   search: string;
+};
+
+export type TModallProps = {
+  children: ReactNode;
+  onClose: () => void;
+};
+
+export type TCardInfoProps = {
+  id: number;
+  onClose: () => void;
 };

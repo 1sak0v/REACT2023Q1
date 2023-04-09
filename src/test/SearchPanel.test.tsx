@@ -3,7 +3,7 @@ import SearchPanel from '../components/searchPanel/SearchPanel';
 
 describe('SearchPanel', () => {
   it('updates search input on change', () => {
-    const { getByPlaceholderText } = render(<SearchPanel />);
+    const { getByPlaceholderText } = render(<SearchPanel onUpdateSearch={() => {}} />);
 
     const inputEl = getByPlaceholderText('Search...');
     const value = 'test test';
