@@ -3,6 +3,7 @@ import { TCharacter, TCharactersData, TResultsCharacter } from '../types/types';
 const useMarvelService = () => {
   const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
   const _apiKey = 'apikey=14f0a7010a2b4ca9b9e6c88156f7d418';
+  const _limit = 20;
 
   const request = async <T>(
     url: string,
@@ -15,17 +16,17 @@ const useMarvelService = () => {
   };
 
   const getAllCharacters = async (name = ''): Promise<TCharacter[]> => {
-    const searchParams = name ? `nameStartsWith=${name}&` : '';
+    const searchByName = name ? `nameStartsWith=${name}&` : '';
     const res = await request<TCharactersData>(
-      `${_apiBase}characters?limit=20&${searchParams}${_apiKey}`
+      `${_apiBase}characters?limit=${_limit}&${searchByName}${_apiKey}`
     );
     return res.data.results.map((datum: TResultsCharacter) => _transformChar(datum));
   };
 
-  // const getCharacter = async (id: number) => {
-  //   const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
-  //   return _transformChar(res.data.results[0]);
-  // };
+  const getCharacter = async (id: number): Promise<TCharacter> => {
+    const res = await request<TCharactersData>(`${_apiBase}characters/${id}?${_apiKey}`);
+    return _transformChar(res.data.results[0]);
+  };
 
   const _transformChar = (char: TResultsCharacter): TCharacter => {
     return {
@@ -36,11 +37,11 @@ const useMarvelService = () => {
         : 'There is no description for this character',
       thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
       comics: char.comics.items,
-      series: char.comics.items,
+      series: char.series.items,
     };
   };
 
-  return { getAllCharacters };
+  return { getAllCharacters, getCharacter };
 };
 
 export default useMarvelService;
