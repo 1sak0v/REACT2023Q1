@@ -16,6 +16,7 @@ const Modal = ({ children, onClose }: TModallProps) => {
     return () => {
       modal.removeChild(element);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return createPortal(

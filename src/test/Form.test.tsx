@@ -2,18 +2,9 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from '../components/form/Form';
 
-const addProfile = (
-  name: string,
-  birthday: string,
-  continent: string,
-  skills: string[],
-  gender: string,
-  picture: string
-): void => {};
-
 describe('Form component', () => {
   test('renders all form fields', () => {
-    render(<Form addProfile={addProfile} />);
+    render(<Form addProfile={() => {}} />);
     expect(screen.getByLabelText('Name')).toBeInTheDocument();
     expect(screen.getByLabelText('Birthday')).toBeInTheDocument();
     expect(screen.getByLabelText('Continent')).toBeInTheDocument();
@@ -26,7 +17,7 @@ describe('Form component', () => {
   });
 
   test('validates form fields correctly', async () => {
-    render(<Form addProfile={addProfile} />);
+    render(<Form addProfile={() => {}} />);
     const submitButton = screen.getByRole('button', { name: 'Submit' });
 
     const nameInput = screen.getByLabelText('Name');

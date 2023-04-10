@@ -29,6 +29,7 @@ const CardList = ({ search }: TCardListProps) => {
         setLoading(false);
         setError(true);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   const onOpenModal = (id: number) => {

@@ -24,6 +24,7 @@ const CardInfo = (props: TCardInfoProps) => {
         setLoading(false);
         setError(true);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.id]);
 
   const spinner = loading ? <Spinner /> : null;
