@@ -1,0 +1,20 @@
+.header {
+  height: 60px;
+  background: #232222;
+  padding: 19px;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+  }
+
+  h1 {
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 120%;
+    text-align: center;
+    color: #FFFFFF;
+    margin-right: 63px;
+  }
+}
