@@ -1,22 +1,36 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import ProfileList from '../components/profileList/ProfileList';
 
-describe('ProfileList component', () => {
-  const profiles = [
-    {
-      id: '1',
-      name: 'John Doe',
-      birthday: '01/01/1990',
-      continent: 'North America',
-      skills: ['JavaScript', 'React', 'HTML', 'CSS'],
-      gender: 'Male',
-      picture: 'https://example.com/profile1.jpg',
-    },
-  ];
+const mockStore = configureStore([]);
 
-  it('renders all profiles correctly', () => {
-    const { getAllByRole } = render(<ProfileList profiles={profiles} />);
-    const cardElements = getAllByRole('listitem');
-    expect(cardElements).toHaveLength(profiles.length);
+describe('ProfileList component', () => {
+  const store = mockStore({
+    formPage: {
+      profiles: [
+        {
+          id: '1',
+          name: 'Anton',
+          birthday: '08/08/2001',
+          continent: 'Europe',
+          skills: ['html'],
+          gender: 'male',
+          picture: 'test.jpeg',
+        },
+      ],
+    },
+  });
+
+  it('should render a list of profiles', () => {
+    render(
+      <Provider store={store}>
+        <ProfileList />
+      </Provider>
+    );
+
+    const profileElements = screen.getAllByRole('listitem');
+
+    expect(profileElements).toHaveLength(1);
   });
 });

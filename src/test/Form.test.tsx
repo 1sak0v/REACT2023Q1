@@ -1,10 +1,16 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from '../components/form/Form';
+import { Provider } from 'react-redux';
+import store from '../store';
 
 describe('Form component', () => {
   test('renders all form fields', () => {
-    render(<Form addProfile={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
     expect(screen.getByLabelText('Name')).toBeInTheDocument();
     expect(screen.getByLabelText('Birthday')).toBeInTheDocument();
     expect(screen.getByLabelText('Continent')).toBeInTheDocument();
@@ -17,7 +23,11 @@ describe('Form component', () => {
   });
 
   test('validates form fields correctly', async () => {
-    render(<Form addProfile={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
     const submitButton = screen.getByRole('button', { name: 'Submit' });
 
     const nameInput = screen.getByLabelText('Name');
