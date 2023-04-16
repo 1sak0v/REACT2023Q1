@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 
-import { IFrom, TFormProps } from '../../types/types';
+import { IFrom, TProfile } from '../../types/types';
+import { profileCreated } from '../../pages/FormPage/formPageSlice';
 
 import './form.scss';
 
-const Form = (props: TFormProps) => {
+const Form = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const {
     register,
@@ -13,6 +16,8 @@ const Form = (props: TFormProps) => {
     formState: { errors },
     reset,
   } = useForm<IFrom>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+
+  const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<IFrom> = ({
     name,
@@ -23,7 +28,19 @@ const Form = (props: TFormProps) => {
     picture,
   }) => {
     setSuccess(true);
-    props.addProfile(name, birthday, continent, skills, gender, URL.createObjectURL(picture[0]));
+
+    const newProfile: TProfile = {
+      id: uuidv4(),
+      name,
+      birthday,
+      continent,
+      skills,
+      gender,
+      picture: URL.createObjectURL(picture[0]),
+    };
+
+    dispatch(profileCreated(newProfile));
+
     setTimeout(() => {
       setSuccess(false);
       reset();
