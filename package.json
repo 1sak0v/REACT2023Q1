@@ -12,9 +12,11 @@
     "test": "vitest --coverage"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "uuid": "^9.0.0"
   },
@@ -25,6 +27,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "@types/redux-mock-store": "^1.0.3",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
@@ -41,6 +44,7 @@
     "jsdom": "^21.1.1",
     "lint-staged": "^13.2.0",
     "prettier": "^2.8.4",
+    "redux-mock-store": "^1.5.4",
     "sass": "^1.59.2",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
