@@ -41,17 +41,6 @@ export interface IFormProps {
   ): void;
 }
 
-export interface IFormState {
-  firstNameError: boolean;
-  birthdayError: boolean;
-  continentError: boolean;
-  skillsError: boolean;
-  genderError: boolean;
-  fileError: boolean;
-  success: boolean;
-  disabledSubmit: boolean;
-}
-
 export interface IFrom {
   name: string;
   birthday: string;
@@ -113,9 +102,9 @@ export type TCharacter = {
   series: TComiscItems[];
 };
 
-export type TSearchForm = {
+export interface ISearchForm {
   search: string;
-};
+}
 
 export type TSearchPanelProps = {
   onUpdateSearch: (search: string) => void;
