@@ -1,17 +1,22 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { TSearchForm, TSearchPanelProps } from '../../types/types';
+import { ISearchForm } from '../../types/types';
+import { searchUpdated } from '../../pages/MainPage/mainPageSlice';
+import { RootState } from '../../store';
 
 import './searchPanel.scss';
 
-const SearchPanel = ({ onUpdateSearch }: TSearchPanelProps) => {
-  const { register, handleSubmit } = useForm({
-    defaultValues: { search: localStorage.getItem('search') ?? '' },
+const SearchPanel = () => {
+  const search = useSelector((state: RootState) => state.mainPage.search);
+  const dispatch = useDispatch();
+
+  const { register, handleSubmit } = useForm<ISearchForm>({
+    defaultValues: { search },
   });
 
-  const onSubmit: SubmitHandler<TSearchForm> = ({ search }) => {
-    localStorage.setItem('search', search);
-    onUpdateSearch(search);
+  const onSubmit: SubmitHandler<ISearchForm> = ({ search }) => {
+    dispatch(searchUpdated(search));
   };
 
   return (

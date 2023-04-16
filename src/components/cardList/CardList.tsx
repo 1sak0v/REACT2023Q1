@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { TCardListProps, TCharacter } from '../../types/types';
-import useMarvelService from '../../service/marvelService';
+import { AppDispatch, RootState } from '../../store';
+import { getCharacters, idUpdated } from '../../pages/MainPage/mainPageSlice';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -10,48 +11,39 @@ import CardInfo from '../cardInfo/CardInfo';
 
 import './cardList.scss';
 
-const CardList = ({ search }: TCardListProps) => {
-  const [characters, setCharacters] = useState<TCharacter[]>([]);
-  const [id, setId] = useState<number | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-
-  const { getAllCharacters } = useMarvelService();
+const CardList = () => {
+  const search = useSelector((state: RootState) => state.mainPage.search);
+  const characters = useSelector((state: RootState) => state.mainPage.characters);
+  const charactersLoadingStatus = useSelector(
+    (state: RootState) => state.mainPage.charactersLoadingStatus
+  );
+  const id = useSelector((state: RootState) => state.mainPage.characterId);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    setLoading(true);
-    getAllCharacters(search)
-      .then((data) => {
-        setCharacters(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-        setError(true);
-      });
+    dispatch(getCharacters(search));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   const onOpenModal = (id: number) => {
-    setId(id);
+    dispatch(idUpdated(id));
   };
 
   const onCloseModal = () => {
-    setId(null);
+    dispatch(idUpdated(null));
   };
 
+  if (charactersLoadingStatus === 'loading') {
+    return <Spinner />;
+  } else if (charactersLoadingStatus === 'error') {
+    return <ErrorMessage />;
+  }
+
   const cards = characters.map((card) => <Card key={card.id} {...card} onOpen={onOpenModal} />);
-  const spinner = loading ? <Spinner /> : null;
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const content = loading || error ? null : cards;
   return (
     <div className="card">
-      {spinner}
-      {errorMessage}
-      <ul className="card__list">{content}</ul>
-      {cards.length === 0 && !loading && !error && (
-        <p className="card__not-found">Characters not found</p>
-      )}
+      <ul className="card__list">{cards}</ul>
+      {cards.length === 0 && <p className="card__not-found">Characters not found</p>}
       {id && (
         <Modal onClose={onCloseModal}>
           <CardInfo id={id} onClose={onCloseModal} />

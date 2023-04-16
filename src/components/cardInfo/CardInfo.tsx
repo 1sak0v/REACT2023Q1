@@ -1,41 +1,37 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { TCardInfoProps, TCharacter } from '../../types/types';
-import useMarvelService from '../../service/marvelService';
+import { AppDispatch, RootState } from '../../store';
+import { TCardInfoProps } from '../../types/types';
+import { getCharacter } from '../../pages/MainPage/mainPageSlice';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './cardInfo.scss';
 
-const CardInfo = (props: TCardInfoProps) => {
-  const [character, setCharacter] = useState<TCharacter | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-
-  const { getCharacter } = useMarvelService();
+const CardInfo = ({ id, onClose }: TCardInfoProps) => {
+  const character = useSelector((state: RootState) => state.mainPage.character);
+  const characterLoadingStatus = useSelector(
+    (state: RootState) => state.mainPage.characterLoadingStatus
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    getCharacter(props.id)
-      .then((data) => {
-        setCharacter(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-        setError(true);
-      });
+    dispatch(getCharacter(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.id]);
+  }, [id]);
 
-  const spinner = loading ? <Spinner /> : null;
-  const errorMessage = error ? <ErrorMessage /> : null;
+  if (characterLoadingStatus === 'loading') {
+    return <Spinner />;
+  } else if (characterLoadingStatus === 'error') {
+    return <ErrorMessage />;
+  }
+
   return (
     <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-      {spinner}
-      {errorMessage}
-      {character && !error && (
+      {character && (
         <>
-          <div className="modal-card__close" onClick={props.onClose}>
+          <div className="modal-card__close" onClick={onClose}>
             &#215;
           </div>
           <img src={character.thumbnail} alt={character.name} className="modal-card__img" />
