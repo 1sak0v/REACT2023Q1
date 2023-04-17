@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TCharactersData } from '../types/types';
-import { s } from 'vitest/dist/types-5872e574';
 
 export const marvelApi = createApi({
   reducerPath: 'marvelApi',
