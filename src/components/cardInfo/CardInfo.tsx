@@ -1,31 +1,23 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { AppDispatch, RootState } from '../../store';
+import { useGetCharacterQuery } from '../../service/apiSlice';
 import { TCardInfoProps } from '../../types/types';
-import { getCharacter } from '../../pages/MainPage/mainPageSlice';
+import useMarvelService from '../../service/marvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './cardInfo.scss';
 
 const CardInfo = ({ id, onClose }: TCardInfoProps) => {
-  const character = useSelector((state: RootState) => state.mainPage.character);
-  const characterLoadingStatus = useSelector(
-    (state: RootState) => state.mainPage.characterLoadingStatus
-  );
-  const dispatch = useDispatch<AppDispatch>();
+  const { _transformChar } = useMarvelService();
 
-  useEffect(() => {
-    dispatch(getCharacter(id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  const { isLoading, data = { data: { results: [] } }, isError } = useGetCharacterQuery(id);
 
-  if (characterLoadingStatus === 'loading') {
+  if (isLoading) {
     return <Spinner />;
-  } else if (characterLoadingStatus === 'error') {
+  } else if (isError) {
     return <ErrorMessage />;
   }
+
+  const character = _transformChar(data.data.results[0]);
 
   return (
     <div className="modal-card" onClick={(e) => e.stopPropagation()}>

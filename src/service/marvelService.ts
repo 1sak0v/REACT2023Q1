@@ -41,7 +41,7 @@ const useMarvelService = () => {
     };
   };
 
-  return { getAllCharacters, getCharacter };
+  return { getAllCharacters, getCharacter, _transformChar };
 };
 
 export default useMarvelService;
