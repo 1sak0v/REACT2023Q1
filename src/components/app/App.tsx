@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Layout from '../../pages/Layout/Layout';
 import MainPage from '../../pages/MainPage/MainPage';
@@ -17,8 +17,7 @@ const App = () => {
           <Route path="about" element={<AboutPages />} />
           <Route path="form" element={<FormPage />} />
         </Route>
-        <Route path="404" element={<ErrorPage />} />
-        <Route path="*" element={<Navigate to="/404" replace />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );

@@ -5,9 +5,8 @@ import { TModallProps } from '../../types/types';
 
 import './modal.scss';
 
-const modal = document.getElementById('modal') as HTMLElement;
-
 const Modal = ({ children, onClose }: TModallProps) => {
+  const modal = document.getElementById('modal') as HTMLElement;
   const element = useMemo(() => document.createElement('div'), []);
 
   useEffect(() => {
