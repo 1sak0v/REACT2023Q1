@@ -35,7 +35,7 @@ const createServer = async () => {
           res.end();
         },
       });
-    } catch (e) {
+    } catch (e: unknown) {
       if (e instanceof Error) {
         vite.ssrFixStacktrace(e);
         next(e);

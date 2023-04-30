@@ -88,7 +88,6 @@ const Form = () => {
         id="continent"
         {...register('continent', {
           required: 'This field is required',
-          validate: (value) => value !== '',
         })}
       >
         <option></option>
